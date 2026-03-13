@@ -19,7 +19,7 @@
       <p class="poll-intro">Tell us a bit about yourself so we can pick the best cards for you.</p>
 
       <div class="poll-question">
-        <h2>Have you given a talk or presentation before?</h2>
+        <h2>Have you given a talk or presentation before at a meetup of conference?</h2>
         <div class="poll-options" data-question="spoken">
           <button class="poll-option" data-value="0">Nope, this is new to me!</button>
           <button class="poll-option" data-value="1">Once or twice</button>
@@ -28,12 +28,12 @@
       </div>
 
       <div class="poll-question">
-        <h2>Where are you in your journey?</h2>
+        <h2>Where are you in your tech career journey?</h2>
         <div class="poll-options" data-question="career">
           <button class="poll-option" data-value="0">Student or just learning</button>
           <button class="poll-option" data-value="1">Early in my career</button>
-          <button class="poll-option" data-value="2">A few years in</button>
-          <button class="poll-option" data-value="3">Seasoned pro</button>
+          <button class="poll-option" data-value="2">A few years in (mid-level devs)</button>
+          <button class="poll-option" data-value="3">Seasoned pro (Senior devs and beyond)</button>
         </div>
       </div>
 
@@ -58,13 +58,26 @@
         <p class="modal-title" id="modal-heading">Fill in the blanks</p>
         <div class="modal-preview" id="modal-preview" aria-live="polite"></div>
         <div class="fill-inputs" id="fill-inputs"></div>
-        <div class="modal-actions">
-          <span class="copy-feedback" id="copy-feedback">✓ Copied!</span>
-          <button class="btn btn-secondary" id="modal-close">Close</button>
-          <button class="btn btn-secondary" id="copy-img-btn">Copy as Image</button>
-          <button class="btn btn-primary" id="copy-btn">Copy Title</button>
+        <span class="copy-feedback" id="copy-feedback">✓ Copied!</span>
+        <div class="modal-actions-row">
+          <button class="btn btn-primary modal-btn" id="copy-img-btn">🖼️ Copy as Image</button>
+          <button class="btn btn-primary modal-btn" id="copy-btn">🆃 Copy Title</button>
+        </div>
+        <div class="modal-actions-row">
+          <button class="btn btn-secondary modal-btn" id="modal-close">Close</button>
+          <button class="btn btn-danger modal-btn" id="clear-btn">Clear</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Saved Titles -->
+  <div class="saved-titles" id="saved-titles">
+    <h2 class="saved-titles-heading">Your Talk Titles</h2>
+    <div class="saved-list" id="saved-list"></div>
+    <div class="saved-add">
+      <input type="text" id="custom-title-input" class="saved-add-input" placeholder="Add a custom talk title…">
+      <button class="btn btn-primary saved-add-btn" id="custom-title-btn">Add</button>
     </div>
   </div>
 

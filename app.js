@@ -29,6 +29,7 @@ let allCards      = [];  // [{ template, tags: string[] }]
 let filteredCards = [];  // templates only, filtered by poll
 let hand             = [];  // current hand: [ { template, filledValues } ]
 let openCardIndex = null;
+let savedTitles   = [];  // [{ template, values[], fullTitle }]
 
 // ── Parse a single CSV row (handles quoted fields with escaped quotes) ─────
 function parseCSVRow(row) {
@@ -133,6 +134,7 @@ function startGame(playerTags) {
   }
   document.getElementById('poll-screen').style.display = 'none';
   document.getElementById('game-screen').classList.add('is-active');
+  document.getElementById('saved-titles').classList.add('is-visible');
   dealHand(INIT_HAND);
 }
 
@@ -289,6 +291,11 @@ function openModal(idx) {
     hand[openCardIndex].filledValues = values;
     renderHand();
 
+    // Add to saved titles list
+    if (values.some(v => v)) {
+      addSavedTitle(card.template, values, fullTitle);
+    }
+
     navigator.clipboard.writeText(fullTitle).catch(() => {
       // Clipboard API unavailable – show the title text so user can copy manually
       const fb = document.getElementById('copy-feedback');
@@ -301,6 +308,14 @@ function openModal(idx) {
     const fb = document.getElementById('copy-feedback');
     fb.classList.add('is-visible');
     setTimeout(() => fb.classList.remove('is-visible'), 2200);
+  };
+
+  // Clear button
+  document.getElementById('clear-btn').onclick = () => {
+    inputs.forEach(inp => { inp.value = ''; });
+    hand[openCardIndex].filledValues = [];
+    updatePreview();
+    renderHand();
   };
 
   // Open overlay
@@ -332,9 +347,180 @@ function previewHTML(parts, inputs) {
 
 // ── Modal: close ──────────────────────────────────────────────────────────
 function closeModal() {
+  // Save current input values back to the hand card
+  if (openCardIndex !== null && hand[openCardIndex]) {
+    const inputs = [...document.querySelectorAll('#fill-inputs input')];
+    const values = inputs.map(i => i.value.trim());
+    hand[openCardIndex].filledValues = values;
+    renderHand();
+
+    // Auto-save to saved titles list if any blanks were filled
+    if (values.some(v => v)) {
+      const card = hand[openCardIndex];
+      const parts = card.template.split('_');
+      const blanks = parts.length - 1;
+      const fullTitle = parts.map((p, i) => p + (i < blanks ? (values[i] || '____') : '')).join('');
+      addSavedTitle(card.template, values, fullTitle);
+    }
+  }
   document.getElementById('modal-overlay').classList.remove('is-open');
   document.getElementById('copy-feedback').classList.remove('is-visible');
   openCardIndex = null;
+}
+
+// ── Saved titles ──────────────────────────────────────────────────────────
+function addSavedTitle(template, values, fullTitle) {
+  // Update if same template already saved, otherwise add
+  const existing = savedTitles.find(s => s.template === template);
+  if (existing) {
+    existing.values = [...values];
+    existing.fullTitle = fullTitle;
+  } else {
+    savedTitles.push({ template, values: [...values], fullTitle });
+  }
+  renderSavedTitles();
+}
+
+function renderSavedTitles() {
+  const container = document.getElementById('saved-titles');
+  const listEl    = document.getElementById('saved-list');
+
+  // Always keep visible once game started (for custom title input)
+  listEl.innerHTML = '';
+  savedTitles.forEach((saved, idx) => {
+    const item = document.createElement('div');
+    item.className = 'saved-item';
+
+    // Build display text with highlighted filled values
+    const textEl = document.createElement('div');
+    textEl.className = 'saved-item-text';
+    if (saved.custom) {
+      textEl.innerHTML = `<span class="saved-filled">${escHtml(saved.fullTitle)}</span>`;
+    } else {
+      const parts = saved.template.split('_');
+      const blanks = parts.length - 1;
+      textEl.innerHTML = parts.map((part, i) => {
+        let out = escHtml(part);
+        if (i < blanks) {
+          const val = saved.values[i] || '____';
+          out += `<span class="saved-filled">${escHtml(val)}</span>`;
+        }
+        return out;
+      }).join('');
+    }
+
+    // Action buttons
+    const actions = document.createElement('div');
+    actions.className = 'saved-item-actions';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'saved-item-btn';
+    editBtn.textContent = 'Edit';
+    editBtn.addEventListener('click', () => {
+      enterEditMode(item, saved, idx);
+    });
+
+    const copyTextBtn = document.createElement('button');
+    copyTextBtn.className = 'saved-item-btn';
+    copyTextBtn.textContent = 'Copy Text';
+    copyTextBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(saved.fullTitle).catch(() => {});
+      copyTextBtn.textContent = '✓ Copied';
+      copyTextBtn.classList.add('is-copied');
+      setTimeout(() => {
+        copyTextBtn.textContent = 'Copy Text';
+        copyTextBtn.classList.remove('is-copied');
+      }, 1500);
+    });
+
+    const copyImgBtn = document.createElement('button');
+    copyImgBtn.className = 'saved-item-btn';
+    copyImgBtn.textContent = 'Copy Image';
+    copyImgBtn.addEventListener('click', async () => {
+      const imgParts = saved.custom ? [saved.fullTitle] : saved.template.split('_');
+      const imgVals  = saved.custom ? [] : saved.values;
+      try {
+        const blob = await renderCardToCanvas(imgParts, imgVals);
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': blob })
+        ]);
+        copyImgBtn.textContent = '✓ Copied';
+        copyImgBtn.classList.add('is-copied');
+      } catch (_) {
+        const blob = await renderCardToCanvas(imgParts, imgVals);
+        const url  = URL.createObjectURL(blob);
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = 'talk-title-card.png';
+        a.click();
+        URL.revokeObjectURL(url);
+        copyImgBtn.textContent = '✓ Downloaded';
+        copyImgBtn.classList.add('is-copied');
+      }
+      setTimeout(() => {
+        copyImgBtn.textContent = 'Copy Image';
+        copyImgBtn.classList.remove('is-copied');
+      }, 1500);
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'saved-item-btn saved-item-btn-delete';
+    deleteBtn.textContent = '✕';
+    deleteBtn.title = 'Remove';
+    deleteBtn.addEventListener('click', () => {
+      savedTitles.splice(idx, 1);
+      renderSavedTitles();
+    });
+
+    actions.appendChild(editBtn);
+    actions.appendChild(copyTextBtn);
+    actions.appendChild(copyImgBtn);
+    actions.appendChild(deleteBtn);
+    item.appendChild(textEl);
+    item.appendChild(actions);
+    listEl.appendChild(item);
+  });
+}
+
+function enterEditMode(itemEl, saved, idx) {
+  itemEl.innerHTML = '';
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'saved-edit-input';
+  input.value = saved.fullTitle;
+
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'saved-item-btn';
+  saveBtn.textContent = 'Save';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'saved-item-btn';
+  cancelBtn.textContent = 'Cancel';
+
+  const actions = document.createElement('div');
+  actions.className = 'saved-item-actions';
+  actions.appendChild(saveBtn);
+  actions.appendChild(cancelBtn);
+
+  itemEl.appendChild(input);
+  itemEl.appendChild(actions);
+  input.focus();
+  input.select();
+
+  const doSave = () => {
+    const newTitle = input.value.trim();
+    if (newTitle) {
+      savedTitles[idx] = { template: newTitle, values: [], fullTitle: newTitle, custom: true };
+    }
+    renderSavedTitles();
+  };
+
+  saveBtn.addEventListener('click', doSave);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') doSave();
+    if (e.key === 'Escape') renderSavedTitles();
+  });
+  cancelBtn.addEventListener('click', () => renderSavedTitles());
 }
 
 // ── HTML escape ───────────────────────────────────────────────────────────
@@ -349,15 +535,25 @@ function escHtml(str) {
 // ── Render card to canvas as PNG blob ─────────────────────────────────────
 function renderCardToCanvas(parts, values) {
   const scale   = 2;            // retina sharpness
-  const W       = 680 * scale;
   const pad     = 30 * scale;
   const font    = `bold ${18 * scale}px 'Helvetica Neue', Helvetica, Arial, sans-serif`;
   const footFont = `600 ${5.5 * scale}px 'Helvetica Neue', Helvetica, Arial, sans-serif`;
   const lineH   = 28 * scale;
+  const maxW    = 680 * scale;
+  const minW    = 320 * scale;
 
-  // --- Pre-measure to determine card height ---
+  // --- Pre-measure to determine card width and height ---
   const measure = document.createElement('canvas').getContext('2d');
   measure.font = font;
+
+  // Measure total text width on a single line to pick a good card width
+  const fullText = parts.map((p, i) => {
+    let t = p;
+    if (i < parts.length - 1) t += (values[i] ? values[i].trim() : '____');
+    return t;
+  }).join('');
+  const singleLineW = measure.measureText(fullText).width + pad * 2;
+  const W = Math.max(minW, Math.min(maxW, Math.ceil(singleLineW * 1.15)));
   const maxTextW = W - pad * 2;
 
   // Build word list with styling info
@@ -388,8 +584,7 @@ function renderCardToCanvas(parts, values) {
 
   const textH  = lines.length * lineH;
   const footH  = 20 * scale;
-  const minH   = 360 * scale;   // landscape minimum height
-  const H      = Math.max(minH, pad + textH + footH + pad);
+  const H      = pad + textH + footH + pad;
 
   // --- Draw ---
   const cvs = document.createElement('canvas');
@@ -490,6 +685,12 @@ document.getElementById('copy-img-btn').addEventListener('click', async () => {
   hand[openCardIndex].filledValues = values;
   renderHand();
 
+  // Add to saved titles list
+  if (values.some(v => v)) {
+    const fullTitle = parts.map((p, i) => p + (i < blanks ? (values[i] || '____') : '')).join('');
+    addSavedTitle(card.template, values, fullTitle);
+  }
+
   const fb = document.getElementById('copy-feedback');
   try {
     const blob = await renderCardToCanvas(parts, values);
@@ -518,3 +719,16 @@ document.getElementById('copy-img-btn').addEventListener('click', async () => {
 // ── Bootstrap ─────────────────────────────────────────────────────────────
 setupPoll();
 loadCards();
+
+// ── Custom title input ────────────────────────────────────────────────────
+document.getElementById('custom-title-btn').addEventListener('click', () => {
+  const input = document.getElementById('custom-title-input');
+  const title = input.value.trim();
+  if (!title) return;
+  savedTitles.push({ template: title, values: [], fullTitle: title, custom: true });
+  input.value = '';
+  renderSavedTitles();
+});
+document.getElementById('custom-title-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('custom-title-btn').click();
+});
