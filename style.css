@@ -1,0 +1,422 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #5e1753;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem 3rem;
+  color: #fff;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+header p {
+  margin-top: 0.5rem;
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card-count {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.btn {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 0.7rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* ── Hand / cards grid ── */
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.card {
+  background: #fff;
+  color: #000;
+  width: 340px;
+  min-height: 180px;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem 0.75rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 4px 6px 0 rgba(0,0,0,0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  user-select: none;
+}
+
+.card:hover {
+  transform: translateY(-10px) rotate(-2deg);
+  box-shadow: 8px 14px 0 rgba(0,0,0,0.6);
+}
+
+.card.is-filled {
+  background: #f5f5f5;
+}
+
+.card-body {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.card-blank {
+  display: inline-block;
+  border-bottom: 3px solid #000;
+  min-width: 50px;
+  height: 1.1em;
+  vertical-align: bottom;
+  margin: 0 2px;
+}
+
+.card-filled-value {
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.card-footer {
+  margin-top: 0.5rem;
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #999;
+  font-weight: 600;
+  text-align: right;
+}
+
+.card-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 1rem;
+  font-size: 0.65rem;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Modal ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 200;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.modal-overlay.is-open {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  color: #000;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.modal-preview {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.65;
+  margin-bottom: 1.75rem;
+  min-height: 70px;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+}
+
+.preview-blank {
+  display: inline-block;
+  border-bottom: 3px solid #000;
+  min-width: 60px;
+  height: 1.1em;
+  vertical-align: bottom;
+  margin: 0 2px;
+}
+
+.preview-value {
+  color: #8AC007;
+  font-style: italic;
+}
+
+.fill-inputs {
+  margin-bottom: 1.5rem;
+}
+
+.fill-group {
+  margin-bottom: 1rem;
+}
+
+.fill-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #555;
+  margin-bottom: 0.35rem;
+}
+
+.fill-group input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.fill-group input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn-secondary {
+  background: #eee;
+  color: #333;
+}
+
+.btn-primary {
+  background: #000;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+.copy-feedback {
+  font-size: 0.85rem;
+  color: #8AC007;
+  font-weight: 600;
+  margin-right: auto;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.copy-feedback.is-visible {
+  opacity: 1;
+}
+
+#copy-img-btn {
+  background: #ddd;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  .card {
+    width: 280px;
+    min-height: 150px;
+    font-size: 0.95rem;
+  }
+
+  .poll-option {
+    font-size: 0.85rem;
+    padding: 0.55rem 0.85rem;
+  }
+}
+
+/* ── Poll screen ── */
+.poll-screen {
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+}
+
+.poll-card {
+  background: #252525;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.poll-intro {
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+}
+
+.poll-question {
+  margin-bottom: 1.75rem;
+  text-align: left;
+}
+
+.poll-question h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+  color: #fff;
+}
+
+.poll-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.poll-option {
+  background: #333;
+  color: #ccc;
+  border: 2px solid #444;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  text-align: left;
+}
+
+.poll-option:hover {
+  border-color: #777;
+  background: #3a3a3a;
+  color: #fff;
+}
+
+.poll-option.selected {
+  border-color: #fff;
+  background: #444;
+  color: #fff;
+}
+
+.btn-start {
+  margin-top: 1.5rem;
+  width: 100%;
+  font-size: 1.05rem;
+  padding: 0.8rem;
+}
+
+.btn-start:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.poll-skip {
+  display: block;
+  margin: 0.75rem auto 0;
+  color: #666;
+  font-size: 0.78rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-decoration: underline;
+}
+
+.poll-skip:hover {
+  color: #aaa;
+}
+
+/* ── Game screen ── */
+.game-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.game-screen.is-active {
+  display: flex;
+}
+
+.change-prefs {
+  color: #555;
+  font-size: 0.75rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-decoration: underline;
+  margin-bottom: 1.25rem;
+}
+
+.change-prefs:hover {
+  color: #aaa;
+}

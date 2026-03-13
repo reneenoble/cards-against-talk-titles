@@ -1,0 +1,196 @@
+template,tags
+"What went wrong when I switched from _ to _ (and what went right)",new-speaker early-career mid-speaker
+"I tried _ so you don't have to",new-speaker early-career mid-speaker
+"The time I accidentally _",new-speaker early-career
+"I thought _ would be easy, but then _",new-speaker early-career
+"What actually happens when you _",new-speaker early-career mid-speaker
+"My first attempt at _",new-speaker early-career
+"I built _ and learned _",new-speaker early-career
+"The unexpected lesson from working with _",new-speaker early-career mid-speaker
+"Why _ kept breaking (and how I finally fixed it)",new-speaker early-career mid-speaker
+"The bug that refused to die: _",mid-speaker early-career
+"Everything was working until _",new-speaker early-career mid-speaker
+"The mystery of the _ error",new-speaker early-career
+"I spent _ hours debugging _",new-speaker early-career
+"It wasn't _, it was actually _",mid-speaker early-career
+"When _ broke production",mid-speaker senior-dev
+"The strangest bug I've seen in _",mid-speaker early-career senior-dev
+"Things I wish I knew before starting _",new-speaker early-career
+"What surprised me about _",new-speaker early-career
+"From zero to _",new-speaker early-career
+"Learning _ the hard way",new-speaker early-career
+"My path into _",new-speaker early-career
+"What finally made _ click for me",new-speaker early-career
+"Understanding _ without losing your mind",new-speaker early-career
+"A beginner's journey into _",new-speaker early-career
+"_ vs _: what I learned",mid-speaker early-career
+"I switched from _ to _ and here's what happened",new-speaker early-career mid-speaker
+"Choosing between _ and _",mid-speaker early-career
+"Why I stopped using _",mid-speaker early-career senior-dev
+"What _ does better than _",mid-speaker early-career
+"Testing _ against _",mid-speaker early-career senior-dev
+"What happens if you build _ using _",mid-speaker early-career
+"I tried building _ in a weekend",new-speaker early-career mid-speaker
+"Can you actually use _ for _?",new-speaker early-career mid-speaker
+"I replaced _ with _",mid-speaker early-career senior-dev
+"I automated _ and it changed _",mid-speaker early-career
+"Pushing _ to its limits",mid-speaker senior-dev
+"The day _ finally worked",new-speaker early-career
+"The moment I understood _",new-speaker early-career
+"The feature that looked simple but wasn't: _",mid-speaker early-career senior-dev
+"Why _ took longer than expected",mid-speaker early-career senior-dev
+"What I learned from rewriting _",mid-speaker senior-dev
+"The hidden complexity of _",mid-speaker early-career senior-dev
+"_ explained like you're new to it",new-speaker early-career
+"What _ actually does",new-speaker early-career
+"Breaking down _",new-speaker early-career
+"How _ works behind the scenes",new-speaker early-career mid-speaker
+"Demystifying _",new-speaker early-career mid-speaker
+"Making sense of _",new-speaker early-career
+"I let _ decide my architecture",new-speaker early-career mid-speaker
+"I tried to fix _ and made it worse",new-speaker early-career
+"How _ humbled me",new-speaker early-career
+"The rabbit hole of _",new-speaker early-career mid-speaker
+"I said ""yes"" to _ and here's what happened",new-speaker early-career
+"My relationship with _",new-speaker early-career
+"The good, the bad, and the weird of _",new-speaker early-career mid-speaker
+"I underestimated _",new-speaker early-career
+"The talk I didn't expect to give about _",new-speaker early-career mid-speaker
+"Why everyone struggles with _",new-speaker early-career
+"My weird experience with _",new-speaker early-career
+"The truth about working with _",new-speaker early-career mid-speaker
+"If you're new to _, this is for you",new-speaker early-career
+"Don't make my mistake with _",new-speaker early-career
+"How I learned _ by building _",new-speaker early-career
+"_ for the _ developer",mid-speaker early-career senior-dev
+"How _ is secretly just _ in disguise",mid-speaker early-career senior-dev
+"Using _ to solve a problem nobody asked about",mid-speaker early-career
+"The unexpected connection between _ and _",mid-speaker early-career senior-dev
+"How _ changed the way I think about _",mid-speaker early-career senior-dev
+"When _ meets _: building the future of _",mid-speaker senior-dev
+"Applying _ to _ and hoping for the best",mid-speaker early-career
+"I used _ to automate my _ and now I can't stop",new-speaker early-career mid-speaker
+"_: a crash course for the rest of us",mid-speaker early-career senior-dev
+"_: a cautionary tale",mid-speaker senior-dev
+"_: a love letter",mid-speaker early-career senior-dev
+"_: a post-mortem",mid-speaker senior-dev
+"_: lessons from _ months in production",mid-speaker senior-dev
+"_: what it is and why it matters",mid-speaker early-career senior-dev
+"The _ problem: why _ makes it worse",mid-speaker senior-dev
+"_ considered harmful: a talk about _",mid-speaker senior-dev
+"Notes on over-engineering: how I made _ way too complicated",mid-speaker early-career senior-dev
+"Falsehoods programmers believe about _",mid-speaker senior-dev
+"_ is not dead and I will die on this hill",mid-speaker senior-dev
+"Stop using _ and start using _ instead",mid-speaker senior-dev
+"You don't need _ to build _",mid-speaker early-career senior-dev
+"_ is just _ with extra steps",mid-speaker early-career senior-dev
+"The case against _ in your _",mid-speaker senior-dev
+"Why _ is the most underrated _",mid-speaker early-career senior-dev
+"What can't _ do?",new-speaker early-career
+"Is _ actually better than _?",new-speaker early-career mid-speaker
+"Why does nobody talk about _?",new-speaker early-career mid-speaker
+"Wait, is _ just _?",new-speaker early-career
+"How hard can _ really be?",new-speaker early-career
+"What if we just _ everything?",new-speaker early-career mid-speaker
+"Making _ faster without breaking _",mid-speaker senior-dev
+"My _ is slow. Make it faster!",mid-speaker senior-dev
+"Scaling _ when you only have _ developers",mid-speaker senior-dev
+"_ in _ minutes: how we shipped it",mid-speaker senior-dev
+"Beat the rush! Designing _ for _",mid-speaker senior-dev
+"How we shipped _ with nothing but _ and determination",mid-speaker senior-dev
+"Modernising _: wrapping a _ year old codebase",mid-speaker senior-dev
+"The long goodbye to _",mid-speaker senior-dev
+"Migrating from _ to _ while everything is on fire",mid-speaker senior-dev
+"_ ate my homework: debugging _ in the real world",mid-speaker senior-dev
+"We thought _ would solve our _ problem. We were wrong.",mid-speaker senior-dev
+"All the things I learnt as a _ (so you don't have to)",mid-speaker early-career senior-dev
+"How to explain _ to your _ using only _",new-speaker early-career mid-speaker
+"Setting up your _ community for success",mid-speaker senior-dev
+"What _ volunteering taught me about _",new-speaker early-career mid-speaker
+"The talk I was afraid to give: _",new-speaker early-career mid-speaker
+"Code review of _ engineers",mid-speaker senior-dev
+"Present _ like a pro!",mid-speaker early-career
+"The _'s guide to surviving _",mid-speaker early-career
+"Taming the _",mid-speaker early-career
+"Roll for initiative: how to make _ more _",mid-speaker early-career
+"_ all the way down",mid-speaker early-career senior-dev
+"How _ humbled me and improved my _",new-speaker early-career mid-speaker
+"Confessions of a _ developer",mid-speaker early-career senior-dev
+"We put _ in everything and this is what happened",mid-speaker early-career
+"_ driven development: why _ makes you a better engineer",mid-speaker early-career senior-dev
+"Teaching _ through _",mid-speaker early-career senior-dev
+"Escape from _ hell",mid-speaker early-career
+"Catching them all: teaching _ with _",mid-speaker early-career
+"_ in the classroom: approaches and insights",mid-speaker senior-dev
+"Zero or hero? Assessing _ in the classroom",mid-speaker senior-dev
+"Why teach the ""why"" of _?",mid-speaker early-career senior-dev
+"From data to decision: _ using _",mid-speaker senior-dev
+"Needle in the haystack: finding _ in _",mid-speaker senior-dev
+"_ pipelines: the good, the bad, and the cursed",mid-speaker senior-dev
+"Building a _ database with _",mid-speaker early-career senior-dev
+"Unpacking the _ toolbox",mid-speaker early-career senior-dev
+"Your _, under your control",mid-speaker early-career senior-dev
+"The first thing I ever built with _",new-speaker early-career
+"How I got into _ by accident",new-speaker early-career
+"What I made with _ and a free weekend",new-speaker early-career
+"I googled ""how to _"" and ended up here",new-speaker early-career
+"_ was confusing until I tried _",new-speaker early-career
+"What I wish someone had told me about _",new-speaker early-career
+"My first _ project and what went hilariously wrong",new-speaker early-career
+"I'm new to _ and here's what I think so far",new-speaker early-career
+"Why _ is more fun than it looks",new-speaker early-career
+"The project that got me hooked on _",new-speaker early-career
+"How _ helped me with _",new-speaker early-career
+"What I learned from breaking _ over and over",new-speaker early-career
+"I made _ with _ and I'm pretty proud of it",new-speaker early-career
+"How I explained _ to my _",new-speaker early-career
+"A _ project inspired by _",new-speaker early-career
+"What happens when a beginner tries _",new-speaker early-career
+"Why _ doesn't have to be scary",new-speaker early-career
+"I built a _ for my _ and it actually worked",new-speaker early-career
+"_ for people who don't know where to start",new-speaker early-career
+"Five things I learned in my first year of _",new-speaker early-career
+"The coolest thing about _ that nobody told me",new-speaker early-career
+"How I turned my interest in _ into a project",new-speaker early-career
+"My favourite thing about _ (and my least favourite)",new-speaker early-career
+"What _ taught me about _",new-speaker early-career
+"_ sounded hard but actually it was just _",new-speaker early-career
+"How _ made me want to learn more about _",new-speaker early-career
+"I had no idea what _ was and now I _",new-speaker early-career
+"Why you should try _ even if you're not a _",new-speaker early-career
+"_: what I learned on my first try",new-speaker early-career
+"_: a beginner's perspective",new-speaker early-career
+"_: it's not as scary as it sounds",new-speaker early-career
+"_: the good parts",new-speaker early-career
+"_: how I got started",new-speaker early-career
+"_: things I wish I knew sooner",new-speaker early-career
+"_: a story in three bugs",new-speaker early-career
+"_: what the tutorials don't tell you",new-speaker early-career
+"_: from confused to confident",new-speaker early-career
+"_: my first year",new-speaker early-career
+"_: an honest review from a newcomer",new-speaker early-career
+"_: what finally clicked",new-speaker early-career mid-speaker
+"_: tips from someone who just figured it out",new-speaker early-career
+"_: why I almost gave up (and didn't)",new-speaker early-career
+"_ in _: a practical introduction",new-speaker early-career mid-speaker
+"_: a field guide for the curious",new-speaker early-career mid-speaker
+"_: one weird trick that actually works",new-speaker early-career mid-speaker
+"_: the talk I needed when I was starting out",new-speaker early-career mid-speaker
+"_ vs _: a beginner's take",new-speaker early-career
+"_: expectations vs reality",new-speaker early-career mid-speaker
+"_: why you should care (even if you don't yet)",mid-speaker early-career
+"_: the missing manual",mid-speaker early-career senior-dev
+"_: a retrospective",mid-speaker senior-dev
+"_: five years later",mid-speaker senior-dev
+"_: what we got wrong",mid-speaker senior-dev
+"_: the sequel nobody asked for",mid-speaker early-career senior-dev
+"_: under the hood",mid-speaker early-career senior-dev
+"_: myths and misconceptions",mid-speaker early-career senior-dev
+"_: from prototype to production",mid-speaker senior-dev
+"_: the untold story",mid-speaker senior-dev
+"_ in _: lessons from the trenches",mid-speaker senior-dev
+"_: a _ year journey",mid-speaker senior-dev
+"_: beyond the basics",mid-speaker early-career senior-dev
+"_: from side project to _",mid-speaker early-career
+"_: the director's cut",mid-speaker senior-dev
+"_: how it started vs how it's going",mid-speaker early-career senior-dev

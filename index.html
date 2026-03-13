@@ -4,302 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cards Against Talk Titles</title>
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: #1a1a1a;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1.5rem 3rem;
-      color: #fff;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    header h1 {
-      font-size: 2.2rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      line-height: 1.1;
-    }
-
-    header p {
-      margin-top: 0.5rem;
-      color: #aaa;
-      font-size: 1rem;
-    }
-
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .card-count {
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-
-    .btn {
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 0.7rem 1.75rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-      white-space: nowrap;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255,255,255,0.2);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
-    /* ── Hand / cards grid ── */
-    .hand {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-      justify-content: center;
-      max-width: 1100px;
-      width: 100%;
-    }
-
-    .card {
-      background: #fff;
-      color: #000;
-      width: 210px;
-      min-height: 290px;
-      border-radius: 10px;
-      padding: 1.25rem 1.25rem 1rem;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 4px 6px 0 rgba(0,0,0,0.5);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      position: relative;
-      user-select: none;
-    }
-
-    .card:hover {
-      transform: translateY(-10px) rotate(-2deg);
-      box-shadow: 8px 14px 0 rgba(0,0,0,0.6);
-    }
-
-    .card.is-filled {
-      background: #f5f5f5;
-    }
-
-    .card-body {
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.55;
-      flex: 1;
-    }
-
-    .card-blank {
-      display: inline-block;
-      border-bottom: 3px solid #000;
-      min-width: 50px;
-      height: 1.1em;
-      vertical-align: bottom;
-      margin: 0 2px;
-    }
-
-    .card-filled-value {
-      font-style: italic;
-      text-decoration: underline;
-      text-decoration-style: dotted;
-    }
-
-    .card-footer {
-      margin-top: 1rem;
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #777;
-      font-weight: 600;
-      text-align: right;
-    }
-
-    .card-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      right: 1rem;
-      font-size: 0.65rem;
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    /* ── Modal ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 200;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-
-    .modal-overlay.is-open {
-      display: flex;
-    }
-
-    .modal {
-      background: #fff;
-      color: #000;
-      border-radius: 12px;
-      padding: 2rem;
-      max-width: 520px;
-      width: 100%;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.7);
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-title {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #777;
-      margin-bottom: 1rem;
-    }
-
-    .modal-preview {
-      font-size: 1.25rem;
-      font-weight: 700;
-      line-height: 1.65;
-      margin-bottom: 1.75rem;
-      min-height: 70px;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid #eee;
-    }
-
-    .preview-blank {
-      display: inline-block;
-      border-bottom: 3px solid #000;
-      min-width: 60px;
-      height: 1.1em;
-      vertical-align: bottom;
-      margin: 0 2px;
-    }
-
-    .preview-value {
-      color: #1a6;
-      font-style: italic;
-    }
-
-    .fill-inputs {
-      margin-bottom: 1.5rem;
-    }
-
-    .fill-group {
-      margin-bottom: 1rem;
-    }
-
-    .fill-group label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #555;
-      margin-bottom: 0.35rem;
-    }
-
-    .fill-group input {
-      width: 100%;
-      padding: 0.6rem 0.75rem;
-      border: 2px solid #ddd;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-family: inherit;
-      transition: border-color 0.15s;
-    }
-
-    .fill-group input:focus {
-      outline: none;
-      border-color: #000;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .btn-secondary {
-      background: #eee;
-      color: #333;
-    }
-
-    .btn-primary {
-      background: #000;
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-    }
-
-    .copy-feedback {
-      font-size: 0.85rem;
-      color: #1a8a50;
-      font-weight: 600;
-      margin-right: auto;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .copy-feedback.is-visible {
-      opacity: 1;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
-
-      .card {
-        width: 160px;
-        min-height: 230px;
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -308,291 +13,61 @@
     <p>Fill in the blanks to find your next conference talk idea.</p>
   </header>
 
-  <div class="controls">
-    <span class="card-count" id="card-count"></span>
-    <button class="btn" id="draw-btn">Draw a Card</button>
+  <!-- Poll Screen -->
+  <div class="poll-screen" id="poll-screen">
+    <div class="poll-card">
+      <p class="poll-intro">Tell us a bit about yourself so we can pick the best cards for you.</p>
+
+      <div class="poll-question">
+        <h2>Have you given a talk or presentation before?</h2>
+        <div class="poll-options" data-question="spoken">
+          <button class="poll-option" data-value="0">Nope, this is new to me!</button>
+          <button class="poll-option" data-value="1">Once or twice</button>
+          <button class="poll-option" data-value="2">I'm a seasoned speaker</button>
+        </div>
+      </div>
+
+      <div class="poll-question">
+        <h2>Where are you in your journey?</h2>
+        <div class="poll-options" data-question="career">
+          <button class="poll-option" data-value="0">Student or just learning</button>
+          <button class="poll-option" data-value="1">Early in my career</button>
+          <button class="poll-option" data-value="2">A few years in</button>
+          <button class="poll-option" data-value="3">Seasoned pro</button>
+        </div>
+      </div>
+
+      <button class="btn btn-start" id="start-btn" disabled>Deal my cards!</button>
+      <button class="poll-skip" id="skip-poll">Just give me everything</button>
+    </div>
   </div>
 
-  <div class="hand" id="hand"></div>
+  <!-- Game Screen -->
+  <div class="game-screen" id="game-screen">
+    <div class="controls">
+      <span class="card-count" id="card-count"></span>
+      <button class="btn" id="draw-btn">Draw a Card</button>
+    </div>
+    <button class="change-prefs" id="change-prefs">&larr; Change preferences</button>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
-    <div class="modal">
-      <p class="modal-title" id="modal-heading">Fill in the blanks</p>
-      <div class="modal-preview" id="modal-preview" aria-live="polite"></div>
-      <div class="fill-inputs" id="fill-inputs"></div>
-      <div class="modal-actions">
-        <span class="copy-feedback" id="copy-feedback">✓ Copied!</span>
-        <button class="btn btn-secondary" id="modal-close">Close</button>
-        <button class="btn btn-primary" id="copy-btn">Copy Title</button>
+    <div class="hand" id="hand"></div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+      <div class="modal">
+        <p class="modal-title" id="modal-heading">Fill in the blanks</p>
+        <div class="modal-preview" id="modal-preview" aria-live="polite"></div>
+        <div class="fill-inputs" id="fill-inputs"></div>
+        <div class="modal-actions">
+          <span class="copy-feedback" id="copy-feedback">✓ Copied!</span>
+          <button class="btn btn-secondary" id="modal-close">Close</button>
+          <button class="btn btn-secondary" id="copy-img-btn">Copy as Image</button>
+          <button class="btn btn-primary" id="copy-btn">Copy Title</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <script>
-    // ── Default cards (fallback if cards.txt cannot be fetched) ──────────────
-    const DEFAULT_CARDS = [
-      "My _ was working until I added _",
-      "_ considered harmful: a talk about _",
-      "How _ taught me everything I know about _",
-      "The day _ broke our _ in production",
-      "Why I switched from _ to _ and never looked back",
-      "Building _ with nothing but _ and determination",
-      "The unexpected connection between _ and _",
-      "From _ to _: a developer's journey",
-      "Why your _ is secretly a _",
-      "I accidentally _ and now I am a _ expert",
-      "How _ ruined my _ and improved my life",
-      "When _ meets _: building the future of _",
-      "Stop using _ and start using _ instead",
-      "The complete guide to _ without losing your _",
-      "How I used _ to fix my broken _",
-      "You don't need _ to build _",
-      "Living with _: lessons from _ months in production",
-      "How _ changed the way I think about _",
-      "Nobody told me _ would break my _",
-      "Confessions of a _ developer: how I learned to love _",
-    ];
-
-    const MAX_HAND  = 7;
-    const INIT_HAND = 5;
-
-    let allCards = [];   // full deck loaded from cards.txt
-    let hand     = [];   // current hand: [ { template, filledValues } ]
-    let openCardIndex = null;
-
-    // ── Load cards.txt ────────────────────────────────────────────────────────
-    async function loadCards() {
-      try {
-        const res  = await fetch('cards.txt');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const text = await res.text();
-        const lines = text
-          .split('\n')
-          .map(l => l.trim())
-          .filter(l => l.length > 0 && !l.startsWith('#'));
-        allCards = lines.length > 0 ? lines : DEFAULT_CARDS;
-      } catch (_) {
-        allCards = DEFAULT_CARDS;
-      }
-      dealHand(INIT_HAND);
-    }
-
-    // ── Utility: Fisher-Yates shuffle ─────────────────────────────────────────
-    function shuffle(arr) {
-      const a = [...arr];
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
-
-    // ── Deal a fresh hand of `n` cards ────────────────────────────────────────
-    function dealHand(n) {
-      const picked = shuffle(allCards).slice(0, n);
-      hand = picked.map(template => ({ template, filledValues: [] }));
-      renderHand();
-    }
-
-    // ── Draw one more card ────────────────────────────────────────────────────
-    function drawCard() {
-      if (hand.length >= MAX_HAND) {
-        dealHand(INIT_HAND);
-        return;
-      }
-      const inHand   = new Set(hand.map(c => c.template));
-      const available = allCards.filter(c => !inHand.has(c));
-      const pool     = available.length > 0 ? available : allCards;
-      const template = pool[Math.floor(Math.random() * pool.length)];
-      hand.push({ template, filledValues: [] });
-      renderHand();
-    }
-
-    // ── Render the hand ───────────────────────────────────────────────────────
-    function renderHand() {
-      const handEl  = document.getElementById('hand');
-      const drawBtn = document.getElementById('draw-btn');
-      const countEl = document.getElementById('card-count');
-
-      countEl.textContent = `${hand.length} / ${MAX_HAND} cards`;
-      drawBtn.textContent = hand.length >= MAX_HAND
-        ? 'Get a Whole New Hand'
-        : 'Draw a Card';
-
-      handEl.innerHTML = '';
-      hand.forEach((card, idx) => {
-        handEl.appendChild(buildCardEl(card, idx));
-      });
-    }
-
-    // ── Build a card DOM element ──────────────────────────────────────────────
-    function buildCardEl(card, idx) {
-      const el = document.createElement('div');
-      el.className = 'card' + (card.filledValues.length > 0 ? ' is-filled' : '');
-      el.setAttribute('role', 'button');
-      el.setAttribute('tabindex', '0');
-      el.setAttribute('aria-label', 'Click to fill in this card');
-
-      const bodyEl = document.createElement('div');
-      bodyEl.className = 'card-body';
-      bodyEl.innerHTML = cardHTML(card);
-
-      const footerEl = document.createElement('div');
-      footerEl.className = 'card-footer';
-      footerEl.textContent = 'Cards Against Talk Titles';
-
-      el.appendChild(bodyEl);
-      el.appendChild(footerEl);
-
-      const activate = () => openModal(idx);
-      el.addEventListener('click', activate);
-      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
-
-      return el;
-    }
-
-    // ── Render card text (hand view) ──────────────────────────────────────────
-    function cardHTML(card) {
-      const parts = card.template.split('_');
-      const blanks = parts.length - 1;
-      if (blanks === 0) {
-        return escHtml(card.template);
-      }
-
-      return parts.map((part, i) => {
-        let out = escHtml(part);
-        if (i < blanks) {
-          const val = card.filledValues[i];
-          if (val) {
-            out += `<span class="card-filled-value">${escHtml(val)}</span>`;
-          } else {
-            out += `<span class="card-blank" aria-hidden="true"></span>`;
-          }
-        }
-        return out;
-      }).join('');
-    }
-
-    // ── Modal: open ───────────────────────────────────────────────────────────
-    function openModal(idx) {
-      openCardIndex = idx;
-      const card   = hand[idx];
-      const parts  = card.template.split('_');
-      const blanks = parts.length - 1;
-
-      // Build input fields
-      const fillEl = document.getElementById('fill-inputs');
-      fillEl.innerHTML = '';
-      const inputs = [];
-
-      for (let i = 0; i < blanks; i++) {
-        const group = document.createElement('div');
-        group.className = 'fill-group';
-
-        const label = document.createElement('label');
-        label.setAttribute('for', `blank-${i}`);
-        label.textContent = `Blank ${i + 1}`;
-
-        const input = document.createElement('input');
-        input.type        = 'text';
-        input.id          = `blank-${i}`;
-        input.placeholder = 'Fill in the blank…';
-        input.value       = card.filledValues[i] || '';
-
-        group.appendChild(label);
-        group.appendChild(input);
-        fillEl.appendChild(group);
-        inputs.push(input);
-      }
-
-      // Live preview
-      function updatePreview() {
-        const preview = document.getElementById('modal-preview');
-        preview.innerHTML = previewHTML(parts, inputs);
-      }
-
-      inputs.forEach(inp => inp.addEventListener('input', updatePreview));
-      updatePreview();
-
-      // Copy button
-      document.getElementById('copy-btn').onclick = () => {
-        const values  = inputs.map(i => i.value.trim());
-        const fullTitle = parts.map((p, i) => p + (i < blanks ? (values[i] || '____') : '')).join('');
-
-        // Save filled values back to hand card
-        hand[openCardIndex].filledValues = values;
-        renderHand();
-
-        navigator.clipboard.writeText(fullTitle).catch(() => {
-          // Clipboard API unavailable – show the title text so user can copy manually
-          const fb = document.getElementById('copy-feedback');
-          fb.textContent = fullTitle;
-          fb.title = 'Select and copy this text';
-          fb.style.userSelect = 'text';
-          fb.style.cursor = 'text';
-        });
-
-        const fb = document.getElementById('copy-feedback');
-        fb.classList.add('is-visible');
-        setTimeout(() => fb.classList.remove('is-visible'), 2200);
-      };
-
-      // Open overlay
-      const overlay = document.getElementById('modal-overlay');
-      overlay.classList.add('is-open');
-      if (inputs.length > 0) {
-        inputs[0].focus();
-      } else {
-        document.getElementById('copy-btn').focus();
-      }
-    }
-
-    // ── Modal: preview HTML ───────────────────────────────────────────────────
-    function previewHTML(parts, inputs) {
-      const blanks = parts.length - 1;
-      return parts.map((part, i) => {
-        let out = escHtml(part);
-        if (i < blanks) {
-          const val = inputs[i] ? inputs[i].value.trim() : '';
-          if (val) {
-            out += `<span class="preview-value">${escHtml(val)}</span>`;
-          } else {
-            out += `<span class="preview-blank" aria-hidden="true"></span>`;
-          }
-        }
-        return out;
-      }).join('');
-    }
-
-    // ── Modal: close ──────────────────────────────────────────────────────────
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('is-open');
-      document.getElementById('copy-feedback').classList.remove('is-visible');
-      openCardIndex = null;
-    }
-
-    // ── HTML escape ───────────────────────────────────────────────────────────
-    function escHtml(str) {
-      return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-    }
-
-    // ── Event listeners ───────────────────────────────────────────────────────
-    document.getElementById('draw-btn').addEventListener('click', drawCard);
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    document.getElementById('modal-overlay').addEventListener('click', e => {
-      if (e.target === e.currentTarget) closeModal();
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    // ── Bootstrap ─────────────────────────────────────────────────────────────
-    loadCards();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
