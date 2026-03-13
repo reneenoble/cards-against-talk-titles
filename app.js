@@ -732,3 +732,12 @@ document.getElementById('custom-title-btn').addEventListener('click', () => {
 document.getElementById('custom-title-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('custom-title-btn').click();
 });
+
+document.getElementById('copy-all-btn').addEventListener('click', () => {
+  if (savedTitles.length === 0) return;
+  const text = savedTitles.map((s, i) => `${i + 1}. ${s.fullTitle}`).join('\n');
+  navigator.clipboard.writeText(text).catch(() => {});
+  const btn = document.getElementById('copy-all-btn');
+  btn.textContent = '✓ Copied!';
+  setTimeout(() => { btn.textContent = 'Copy All'; }, 1500);
+});
